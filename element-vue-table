@@ -1,0 +1,262 @@
+父组件：
+<template>
+  <div>
+    <div class="containerTable">
+      <div class="table">
+        <Table 
+        :tableData="tableData" 
+        :TableColumnData="TableColumnData"
+        @handleEdit="handleEdit"
+        @handleCurrentChange="handleCurrentChange"
+        >
+          <template slot="edit" slot-scope="scope">
+            <!-- <el-button size="mini" @click="handleEdit(scope)"
+            
+              >详情</el-button
+            > -->
+            <el-button type="primary" icon="el-icon-edit" @click="handleEdit(scope)">详情</el-button>
+          </template>
+        </Table>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Table from '../../components/Table'
+export default {
+  components: {
+    Table,
+  },
+  data() {
+    return {
+      tableData: [
+        {
+          id: 1,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 2,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 3,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 4,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 1,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 2,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 3,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 4,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 1,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 2,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 3,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+        {
+          id: 4,
+          Ntime: '2016-05-02',
+          Ltime: '2016-05-02',
+          name: '王小虎',
+          score: '上海市普陀区金沙',
+          state: "已完成"
+        },
+      ],
+      TableColumnData: [
+        {key: "id", value: "id", "minWidth": 50},
+        {key: "name", value: "实验名称", "minWidth": 100},
+        {key: "Ltime", value: "开始时间", "minWidth": 160},
+        {key: "Ntime", value: "结束时间", "minWidth": 160},
+        {key: "score", value: "得分", "minWidth": 90},
+        {key: "state", value: "状态", "minWidth": 90},  
+      ],
+    }
+  },
+  methods: {
+    isMileageCardOrder() {
+      console.log(this.selectValue)
+    },
+    onsearch() {
+      console.log(this.input2)
+    },
+    handleEdit(scope) {
+      console.log('====================================')
+      console.log(scope)
+      console.log('====================================')
+      
+    },
+    handleCurrentChange(val){
+      console.log('====================================');
+      console.log(val);
+      console.log('====================================');
+    }
+  },
+}
+</script>
+<style lang="less" scoped>
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .select {
+    width: 10vw;
+  }
+  .search {
+    width: 20vw;
+    display: flex;
+  }
+}
+</style>
+
+
+
+
+。。。子组件
+<template>
+  <div>
+    <el-table
+      :data="
+        tableData.filter(
+          (data) =>
+            !search || data.name.toLowerCase().includes(search.toLowerCase())
+        )
+      "
+      style="width: 100%"
+    >
+      <el-table-column
+        v-for="(item, index) in TableColumnData"
+        :key="item.id"
+        :label="item.value"
+        :min-width="item.minWidth"
+        :prop="item.key"
+      >
+      </el-table-column>
+      <el-table-column
+        label="操作"
+        align="center"
+        :min-width="80"
+        fixed="right"
+      >
+        <template slot-scope="scope">
+          <slot name="edit" :scope="scope"></slot>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage3"
+      :page-size="10"
+      layout="prev, pager, next, jumper"
+      :total="100"
+    >
+    </el-pagination>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    tableData: {
+      //el-table组件绑定的数据
+      type: Array,
+      require: true,
+    },
+    TableColumnData: {
+      //表格显示的字段和字段名称
+      type: Array,
+      require: true,
+    },
+  },
+
+  data() {
+    return {
+      search: '',
+      currentPage3: 1,
+    }
+  },
+  created() {},
+  methods: {
+    handleEdit(scope) {
+      //  console.log('====================================');
+      //  console.log(scope);
+      //  console.log('====================================');
+      // this.$emit('handleEdit', scope)
+    },
+    // handleSizeChange(val) {
+    //     console.log(`每页 ${val} 条`);
+    //   },
+    handleCurrentChange(val) {
+      this.$emit('handleCurrentChange', val)
+      console.log(`当前页: ${val}`)
+      // this.$parent.initData(val);
+    },
+  },
+}
+</script>
+
